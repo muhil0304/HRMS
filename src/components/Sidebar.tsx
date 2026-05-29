@@ -4,7 +4,6 @@ import {
   Users,
   CalendarClock,
   BarChart3,
-  Settings,
   LogOut,
   Briefcase
 } from 'lucide-react';

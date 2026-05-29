@@ -8,6 +8,7 @@ import { EmployeeList } from './components/EmployeeList';
 import { useHRMS } from './hooks/useHRMS';
 import { Button } from './components/ui/Button';
 import { X } from 'lucide-react';
+import { Footer } from './components/Footer';
 
 const DashboardContent: React.FC = () => {
   const [currentView, setView] = useState('dashboard');
@@ -117,6 +118,7 @@ const DashboardContent: React.FC = () => {
           {currentView === 'leaves' && <LeaveRequests />}
           {currentView === 'analytics' && <AnalyticsCharts />}
         </main>
+        <Footer />
       </div>
 
       {/* Add Employee Modal */}

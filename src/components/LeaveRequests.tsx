@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, X, Calendar, FileText, User } from 'lucide-react';
+import { Check, X, Calendar, FileText } from 'lucide-react';
 import { useHRMS } from '../hooks/useHRMS';
 import { Card } from './ui/Card';
 import { Badge } from './ui/Badge';
