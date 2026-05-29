@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { HRMSProvider } from './context/HRMSContext';
-import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { DashboardOverview } from './components/DashboardOverview';
 import { AnalyticsCharts } from './components/AnalyticsCharts';
@@ -90,13 +89,12 @@ const DashboardContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 pl-64">
-      {/* Sidebar */}
-      <Sidebar currentView={currentView} setView={setView} />
-
+    <div className="min-h-screen bg-slate-50">
       {/* Main Content Area */}
       <div className="flex flex-col min-h-screen">
         <Header
+          currentView={currentView}
+          setView={setView}
           title={getViewTitle()}
           onAddEmployeeClick={() => setIsAddEmployeeOpen(true)}
           onAddLeaveClick={() => setIsAddLeaveOpen(true)}
