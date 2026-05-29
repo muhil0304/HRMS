@@ -10,15 +10,13 @@ import {
   ResponsiveContainer,
   PieChart,
   Pie,
-  Cell,
-  BarChart,
-  Bar
+  Cell
 } from 'recharts';
 import { useHRMS } from '../hooks/useHRMS';
 import { Card } from './ui/Card';
 
 export const AnalyticsCharts: React.FC = () => {
-  const { attendanceTrend, departmentDistribution, employees } = useHRMS();
+  const { attendanceTrend, employees } = useHRMS();
 
   // Calculate dynamic department distribution based on active employees
   const dynamicDistribution = React.useMemo(() => {
