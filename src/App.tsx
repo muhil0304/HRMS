@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { HRMSProvider } from './context/HRMSContext';
-import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { DashboardOverview } from './components/DashboardOverview';
 import { AnalyticsCharts } from './components/AnalyticsCharts';
@@ -90,19 +89,29 @@ const DashboardContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 pl-64">
-      {/* Sidebar */}
-      <Sidebar currentView={currentView} setView={setView} />
-
+    <div className="min-h-screen bg-slate-50">
       {/* Main Content Area */}
       <div className="flex flex-col min-h-screen">
         <Header
-          title={getViewTitle()}
+          currentView={currentView}
+          setView={setView}
           onAddEmployeeClick={() => setIsAddEmployeeOpen(true)}
           onAddLeaveClick={() => setIsAddLeaveOpen(true)}
         />
 
-        <main className="flex-1 p-8 max-w-7xl w-full mx-auto">
+        <main className="flex-1 p-8 max-w-7xl w-full mx-auto space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold text-slate-900">{getViewTitle()}</h2>
+              <p className="text-sm text-slate-500 mt-1">
+                {currentView === 'dashboard' && "Welcome back! Here's what's happening with your workforce today."}
+                {currentView === 'employees' && "Manage your organization's employee records and directory."}
+                {currentView === 'leaves' && "Review and manage employee leave requests and balances."}
+                {currentView === 'analytics' && "Analyze workforce metrics, attendance trends, and department distributions."}
+              </p>
+            </div>
+          </div>
+
           {currentView === 'dashboard' && <DashboardOverview />}
           {currentView === 'employees' && <EmployeeList />}
           {currentView === 'leaves' && <LeaveRequests />}
