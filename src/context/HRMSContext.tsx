@@ -154,7 +154,7 @@ export const HRMSProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const log: ActivityLog = {
       id: `LOG${Date.now()}`,
       type: 'Leave',
-      message: `Approved leave request for ${empName}`,
+      message: `${empName}'s Leave request was approved`,
       timestamp: 'Just now',
       user: 'Bob Smith'
     };
@@ -176,28 +176,28 @@ export const HRMSProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const log: ActivityLog = {
       id: `LOG${Date.now()}`,
       type: 'Leave',
-      message: `Rejected leave request for ${empName}`,
+      message: `${empName}'s Leave request was rejected`,
       timestamp: 'Just now',
       user: 'Bob Smith'
     };
     setActivityLogs(prev => [log, ...prev]);
   };
 
-  const addLeaveRequest = (req: Omit<LeaveRequest, 'id' | 'status'>) => {
+  const addLeaveRequest = (newReq: Omit<LeaveRequest, 'id' | 'status'>) => {
     const id = `LR00${leaveRequests.length + 1}`;
-    const leave: LeaveRequest = {
-      ...req,
+    const request: LeaveRequest = {
+      ...newReq,
       id,
       status: 'Pending'
     };
-    setLeaveRequests(prev => [leave, ...prev]);
+    setLeaveRequests(prev => [...prev, request]);
 
     const log: ActivityLog = {
       id: `LOG${Date.now()}`,
       type: 'Leave',
-      message: `${leave.employeeName} requested ${leave.type} leave from ${leave.startDate} to ${leave.endDate}`,
+      message: `${request.employeeName} submitted a pending request for ${request.type} Leave`,
       timestamp: 'Just now',
-      user: leave.employeeName
+      user: 'Bob Smith'
     };
     setActivityLogs(prev => [log, ...prev]);
   };

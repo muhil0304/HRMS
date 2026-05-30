@@ -152,37 +152,36 @@ export const EmployeeList: React.FC = () => {
                     {/* Quick Actions */}
                     <td className="whitespace-nowrap px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
-                        {emp.status === 'Active' ? (
+                        {emp.status === 'Active' && (
                           <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => updateEmployeeStatus(emp.id, 'On Leave')}
-                            title="Set On Leave"
-                            className="text-amber-600 hover:bg-amber-50"
-                          >
-                            Set Leave
-                          </Button>
-                        ) : emp.status === 'On Leave' ? (
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => updateEmployeeStatus(emp.id, 'Active')}
-                            title="Set Active"
-                            className="text-emerald-600 hover:bg-emerald-50"
-                          >
-                            Set Active
-                          </Button>
-                        ) : null}
-
-                        {emp.status !== 'Terminated' && (
-                          <Button
-                            variant="ghost"
+                            variant="danger"
                             size="sm"
                             onClick={() => updateEmployeeStatus(emp.id, 'Terminated')}
-                            title="Terminate Employee"
-                            className="text-rose-600 hover:bg-rose-50"
+                            className="gap-1 h-8 text-xs"
                           >
-                            <UserMinus className="h-4 w-4" />
+                            <UserMinus className="h-3.5 w-3.5" />
+                            Terminate
+                          </Button>
+                        )}
+                        {emp.status === 'On Leave' && (
+                          <Button
+                            variant="success"
+                            size="sm"
+                            onClick={() => updateEmployeeStatus(emp.id, 'Active')}
+                            className="gap-1 h-8 text-xs"
+                          >
+                            <ShieldAlert className="h-3.5 w-3.5" />
+                            Reactivate
+                          </Button>
+                        )}
+                        {emp.status === 'Terminated' && (
+                          <Button
+                            variant="secondary"
+                            size="sm"
+                            onClick={() => updateEmployeeStatus(emp.id, 'Active')}
+                            className="gap-1 h-8 text-xs"
+                          >
+                            Rehire
                           </Button>
                         )}
                       </div>
