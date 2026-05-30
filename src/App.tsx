@@ -7,6 +7,7 @@ import { LeaveRequests } from './components/LeaveRequests';
 import { EmployeeList } from './components/EmployeeList';
 import { useHRMS } from './hooks/useHRMS';
 import { Button } from './components/ui/Button';
+import { Footer } from './components/Footer';
 import { X } from 'lucide-react';
 
 const DashboardContent: React.FC = () => {
@@ -117,6 +118,9 @@ const DashboardContent: React.FC = () => {
           {currentView === 'leaves' && <LeaveRequests />}
           {currentView === 'analytics' && <AnalyticsCharts />}
         </main>
+
+        {/* Footer Component */}
+        <Footer />
       </div>
 
       {/* Add Employee Modal */}
@@ -176,7 +180,7 @@ const DashboardContent: React.FC = () => {
                   <select
                     value={newEmployee.department}
                     onChange={(e) => setNewEmployee({ ...newEmployee, department: e.target.value })}
-                    className="mt-1.5 h-10 w-full rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 bg-white"
+                    className="mt-1.5 h-10 w-full rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                   >
                     <option value="Engineering">Engineering</option>
                     <option value="Human Resources">Human Resources</option>
@@ -188,11 +192,16 @@ const DashboardContent: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2 border-t border-slate-100 pt-4">
-                <Button type="button" variant="secondary" onClick={() => setIsAddEmployeeOpen(false)}>
+              <div className="flex gap-3 border-t border-slate-100 pt-4">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => setIsAddEmployeeOpen(false)}
+                  className="flex-1"
+                >
                   Cancel
                 </Button>
-                <Button type="submit" variant="primary">
+                <Button type="submit" variant="primary" className="flex-1">
                   Add Employee
                 </Button>
               </div>
@@ -201,7 +210,7 @@ const DashboardContent: React.FC = () => {
         </div>
       )}
 
-      {/* Request Leave Modal */}
+      {/* Add Leave Modal */}
       {isAddLeaveOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm">
           <div className="w-full max-w-md rounded-xl border border-slate-200 bg-white p-6 shadow-xl">
@@ -222,27 +231,41 @@ const DashboardContent: React.FC = () => {
                   required
                   value={newLeave.employeeId}
                   onChange={(e) => setNewLeave({ ...newLeave, employeeId: e.target.value })}
-                  className="mt-1.5 h-10 w-full rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 bg-white"
+                  className="mt-1.5 h-10 w-full rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                 >
                   <option value="">Select Employee</option>
-                  {employees.filter(e => e.status !== 'Terminated').map(emp => (
-                    <option key={emp.id} value={emp.id}>{emp.name} ({emp.department})</option>
+                  {employees.map(emp => (
+                    <option key={emp.id} value={emp.id}>{emp.name} ({emp.role})</option>
                   ))}
                 </select>
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">Leave Type</label>
-                <select
-                  value={newLeave.type}
-                  onChange={(e) => setNewLeave({ ...newLeave, type: e.target.value as any })}
-                  className="mt-1.5 h-10 w-full rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 bg-white"
-                >
-                  <option value="Annual">Annual Leave</option>
-                  <option value="Sick">Sick Leave</option>
-                  <option value="Maternity">Maternity Leave</option>
-                  <option value="Personal">Personal Leave</option>
-                </select>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">Leave Type</label>
+                  <select
+                    value={newLeave.type}
+                    onChange={(e) => setNewLeave({ ...newLeave, type: e.target.value as any })}
+                    className="mt-1.5 h-10 w-full rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                  >
+                    <option value="Annual">Annual</option>
+                    <option value="Sick">Sick</option>
+                    <option value="Maternity">Maternity</option>
+                    <option value="Personal">Personal</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">Reason</label>
+                  <input
+                    type="text"
+                    required
+                    value={newLeave.reason}
+                    onChange={(e) => setNewLeave({ ...newLeave, reason: e.target.value })}
+                    placeholder="Vacation, medical, etc."
+                    className="mt-1.5 h-10 w-full rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                  />
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -269,23 +292,16 @@ const DashboardContent: React.FC = () => {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">Reason</label>
-                <textarea
-                  required
-                  rows={3}
-                  value={newLeave.reason}
-                  onChange={(e) => setNewLeave({ ...newLeave, reason: e.target.value })}
-                  placeholder="Provide a brief reason for the leave request..."
-                  className="mt-1.5 w-full rounded-lg border border-slate-200 p-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 resize-none"
-                />
-              </div>
-
-              <div className="flex justify-end gap-2 border-t border-slate-100 pt-4">
-                <Button type="button" variant="secondary" onClick={() => setIsAddLeaveOpen(false)}>
+              <div className="flex gap-3 border-t border-slate-100 pt-4">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => setIsAddLeaveOpen(false)}
+                  className="flex-1"
+                >
                   Cancel
                 </Button>
-                <Button type="submit" variant="primary">
+                <Button type="submit" variant="primary" className="flex-1">
                   Submit Request
                 </Button>
               </div>
@@ -297,7 +313,7 @@ const DashboardContent: React.FC = () => {
   );
 };
 
-export const App: React.FC = () => {
+const App: React.FC = () => {
   return (
     <HRMSProvider>
       <DashboardContent />
